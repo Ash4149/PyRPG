@@ -10,7 +10,7 @@ class Entity:
         self.name = name
         self.x = x
         self.y = y
-        self.sprites = sprites
+        self.map_sprites = sprites[0]
         pass
     
     def move(self, dx, dy, map_data):
@@ -21,8 +21,20 @@ class Entity:
     def sleep(self, duration):
         self.sleep_until = pygame.time.get_ticks() + (duration * 1000)
 
-    def draw(self, screen):
-        screen.blit(self.sprites, (self.x * tile_size, self.y * tile_size))
+    def draw(self, screen, direction=False):
+        if direction != False:
+            index = 0
+            if direction == "up":
+                index = 1
+            elif direction == "right":
+                index = 2
+            elif direction == "left":
+                index = 3
+            
+            screen.blit(self.map_sprites[index], (self.x * tile_size, self.y * tile_size))
+        
+        elif direction == False:
+            screen.blit(self.map_sprites[0], (self.x * tile_size, self.y * tile_size))
 
 
 class Character(Entity):

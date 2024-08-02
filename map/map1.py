@@ -1,4 +1,4 @@
-#25 x 18
+#maps' size : 25 x 18
 #x:0, y:0
 number_map = 0
 

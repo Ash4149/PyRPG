@@ -4,28 +4,23 @@ import pygame
 import sys
 import tiles_register
 
-#import map
-import map.map1, map.map2
 import map_register
 
 #import entities
-import entities.characteres.Ash as ash_chr
-import entities.simple_entities.EntityTest as entity_test_ent
-
-
-global new_map
-
+#import entities.characteres.Ash as ash_chr
+#import entities.simple_entities.EntityTest as entity_test_ent
+import entities.entities_register
 
 #initialization
 pygame.init()
 
 #window parameters
 fullscreen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-pygame.display.set_caption('PyRPG (beta)')
+pygame.display.set_caption('PyRPG (in progress)')
 
 screen_width, screen_height = 800, 600
 screen_windowed = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('PyRPG (beta)')
+pygame.display.set_caption('PyRPG (in progress)')
 
 screen = screen_windowed
 
@@ -44,10 +39,10 @@ number_map = map_register.register_number[y_map][x_map]
 tiles = tiles_register.tiles_register
 
 #Characteres
-Ash = ash_chr.ash_chr
+Ash = entities.entities_register.Characteres_register["Ash"]
 
 #Entity
-entity_test = entity_test_ent.EntityTest
+entity_test = entities.entities_register.SimpleEntities_register["EntityTest"]
 
 #Function mooving in loop
 def move_loop(chr):
@@ -74,13 +69,14 @@ def check_position(Character):
 #Game loop
 running = True
 
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
             move_loop(Ash)
-    
+
     #Choose the map to load
     if check_position(Ash) == "x+":
         x_map = x_map + 1
