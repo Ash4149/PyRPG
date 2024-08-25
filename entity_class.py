@@ -1,25 +1,64 @@
 import pygame
 import random
 import time
+from keyboard import is_pressed as prsd
 
 tile_size = 32
 #window_size = (800, 600)
 
 class Entity:
-    def __init__(self, name, x, y, sprites) -> None:
+    def __init__(self, name, x, y, sprites, battle_sprites=None) -> None:
         self.name = name
         self.x = x
         self.y = y
+        self.pixel_x = self.x * tile_size
+        self.pixel_y = self.y * tile_size
+        self.change_pixel_lapse = 0
         self.map_sprites = sprites[0]
+        self.battle_sprites = battle_sprites
+        self.is_animated = False
+        self.dx = 0
+        self.dy = 0
         pass
     
-    def move(self, dx, dy, map_data):
-        if map_data[self.y + dy][self.x + dx] in {0, 2, 3}:
-            self.x = self.x + dx
-            self.y = self.y + dy
+    def ChangeMapPToPP(self):
+        self.pixel_x = self.x * tile_size
+        self.pixel_y = self.y * tile_size
     
-    def sleep(self, duration):
-        self.sleep_until = pygame.time.get_ticks() + (duration * 1000)
+    def move(self, dx, dy, map_data):
+        self.dx = dx
+        self.dy = dy
+        if map_data[self.y + dy][self.x + dx] in {0, 2, 3}:
+            if self.change_pixel_lapse == 0:
+                self.x = self.x + dx
+                self.y = self.y + dy
+            
+            self.is_animated = True
+    
+    '''
+    def use_move(self, map_data):
+        if prsd('up'):
+            Character.move(0, -1, map_data)
+        elif prsd('down'):
+            Character.move(0, 1, map_data)
+        elif prsd('left'):
+            Character.move(-1, 0, map_data)
+        elif prsd('right'):
+            Character.move(1, 0, map_data)
+    '''
+
+    def move_animation(self, move_division):
+        dpx = (self.dx * tile_size) / move_division
+        dpy = (self.dy * tile_size) / move_division
+        if self.change_pixel_lapse < move_division:
+            if self.is_animated == True:
+                self.pixel_x = self.pixel_x + dpx
+                self.pixel_y = self.pixel_y + dpy
+                self.change_pixel_lapse = self.change_pixel_lapse + 1
+        elif self.change_pixel_lapse >= move_division:
+            self.change_pixel_lapse = 0
+            self.is_animated = False
+
 
     def draw(self, screen, direction=False):
         if direction != False:
@@ -31,10 +70,10 @@ class Entity:
             elif direction == "left":
                 index = 3
             
-            screen.blit(self.map_sprites[index], (self.x * tile_size, self.y * tile_size))
+            screen.blit(self.map_sprites[index], (self.pixel_x, self.pixel_y))
         
         elif direction == False:
-            screen.blit(self.map_sprites[0], (self.x * tile_size, self.y * tile_size))
+            screen.blit(self.map_sprites[0], (self.pixel_x, self.pixel_y))
 
 
 class Character(Entity):
@@ -59,11 +98,11 @@ class Character(Entity):
 
 
 class SimpleEntity(Entity):
-    def __init__(self, name, x, y, sprites, map, set_x, set_y, tiles_move=None) -> None:
+    def __init__(self, name, x, y, sprites, map, tiles_move=None) -> None:
         super().__init__(name, x, y, sprites)
         self.map = map
-        self.set_x = set_x
-        self.set_y = set_y
+        self.set_x = x
+        self.set_y = y
         self.tiles_move = tiles_move
         pass
     
@@ -74,11 +113,11 @@ class SimpleEntity(Entity):
             return "-"
     
     def remove(self):
-        self.x, self.y = -5, -5
+        self.pixel_x, self.pixel_y = -5, -5
     
     def replace(self):
-        self.x = self.set_x
-        self.y = self.set_y
+        self.pixel_x = self.set_x * tile_size
+        self.pixel_x = self.set_y * tile_size
     
     def active(self, Current_number_map):
         if self.map == Current_number_map:
@@ -93,8 +132,10 @@ class SimpleEntity(Entity):
         elif axe == "x":
             dy = random.choice([-1, 1])
         if map_data[self.y + dy][self.x + dx] in self.tiles_move:
-            self.x = self.x + dx
-            self.y = self.y + dy
+            if (self.x + dx) != 25 or 0:
+                self.x = self.x + dx
+            if (self.y + dy) != 18 or 0:
+                self.y = self.y + dy
             
 
 #chr data

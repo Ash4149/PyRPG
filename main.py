@@ -3,12 +3,7 @@ from keyboard import is_pressed as prsd
 import pygame
 import sys
 import tiles_register
-
 import map_register
-
-#import entities
-#import entities.characteres.Ash as ash_chr
-#import entities.simple_entities.EntityTest as entity_test_ent
 import entities.entities_register
 
 #initialization
@@ -44,7 +39,6 @@ Ash = entities.entities_register.Characteres_register["Ash"]
 #Entity
 entity_test = entities.entities_register.SimpleEntities_register["EntityTest"]
 
-#Function mooving in loop
 def move_loop(chr):
     if prsd('up'):
             chr.move(0, -1, map_data)
@@ -57,18 +51,18 @@ def move_loop(chr):
 
 #Check position
 def check_position(Character):
-    if Character.x == 24:
-        return "x+"
-    elif Character.y == 18:
-        return "y+"
-    elif Character.x == 0:
-        return "x-"
-    elif Character.y == 0:
-        return "y-"
+    if not Character.is_animated == False:
+        if Character.x == 24:
+            return "x+"
+        elif Character.y == 18:
+            return "y+"
+        elif Character.x == 0:
+            return "x-"
+        elif Character.y == 0:
+            return "y-"
 
 #Game loop
 running = True
-
 
 while running:
     for event in pygame.event.get():
@@ -83,21 +77,25 @@ while running:
         map_data = map_register.register_data[y_map][x_map]
         number_map = map_register.register_number[y_map][x_map]
         Ash.x = 1
+        Ash.ChangeMapPToPP()
     elif check_position(Ash) == "y+":
         y_map = y_map + 1
         map_data = map_register.register_data[y_map][x_map]
         number_map = map_register.register_number[y_map][x_map]
         Ash.y = 1
+        Ash.ChangeMapPToPP()
     elif check_position(Ash) == "x-":
         x_map = x_map - 1
         map_data = map_register.register_data[y_map][x_map]
         number_map = map_register.register_number[y_map][x_map]
         Ash.x = 23
+        Ash.ChangeMapPToPP()
     elif check_position(Ash) == "y-":
         y_map = y_map - 1
         map_data = map_register.register_data[y_map][x_map]
         number_map = map_register.register_number[y_map][x_map]
         Ash.y = 17
+        Ash.ChangeMapPToPP()
 
     #Fill Background
     screen.fill(Black)
@@ -109,6 +107,7 @@ while running:
             screen.blit(tiles[tile_type], (col * tile_size, row * tile_size))
 
     # Print character(es)
+    Ash.move_animation(10)
     Ash.draw(screen)
 
     #print entities
