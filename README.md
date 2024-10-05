@@ -12,6 +12,6 @@ Le but est de rendre le tout fonctionnel tout en essayant de garder une facilit�
     Vous aurez besoin d'ouvrir le terminal et d'y écrire 'pip install cx-Freeze'.
     Ensuite, rendez-vous au dossier de PyRPG à l'aide de la commande 'cd' suivis du chemin complet du dossier PyRPG.
     Pour finir, entrez 'python to_exe.py build' et laissez le programme transformer le fichier 'main.py' en exe.
-    Une fois finis, accédez au dossier 'exe' venant d'être créé dans le dossier de PyRPG ainsi qu'au dossier 'exe_...' s'y trouvant et y attrapez le fichier main.exe ainsi que le dossier 'lib' placez les dans le dossier-racine de PyRPG.
+    Une fois finis, accédez au dossier 'exe' venant d'être créé dans le dossier de PyRPG ainsi qu'au dossier 'exe_...' s'y trouvant et vous y trouverez l'exécutable ainsi que ses fichiers et dossiers locaux nessécaire. (cela signifie que l'exécutable seul ne marcherat pas, il a besoin des autres dossiers et fichiers se trouvant dans le dossier 'exe...', et oui c'est un bordel...)
     Ensuite, vous pourrez utiliser l'exécutable.
     /!\ Si vous modifiez ou ajoutez des fichiers, veillez à reproduire la démarche de création de l'exécutable si vous souhaitez encore utilisez l'exécutable. /!\
