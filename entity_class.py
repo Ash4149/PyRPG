@@ -32,21 +32,8 @@ class Entity:
             if self.change_pixel_lapse == 0:
                 self.x = self.x + dx
                 self.y = self.y + dy
-            
             self.is_animated = True
     
-    '''
-    def use_move(self, map_data):
-        if prsd('up'):
-            Character.move(0, -1, map_data)
-        elif prsd('down'):
-            Character.move(0, 1, map_data)
-        elif prsd('left'):
-            Character.move(-1, 0, map_data)
-        elif prsd('right'):
-            Character.move(1, 0, map_data)
-    '''
-
     def move_animation(self, move_division):
         dpx = (self.dx * tile_size) / move_division
         dpy = (self.dy * tile_size) / move_division
@@ -136,8 +123,3 @@ class SimpleEntity(Entity):
                 self.x = self.x + dx
             if (self.y + dy) != 18 or 0:
                 self.y = self.y + dy
-            
-
-#chr data
-chr_base_sprite = pygame.Surface((tile_size, tile_size))
-chr_base_sprite.fill((255, 0, 0))
