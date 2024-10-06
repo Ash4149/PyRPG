@@ -1,3 +1,6 @@
+# Faites un don via paypal :
+paypal.me/Ash666666
+
 # PyRPG
 Moteur RPG style Zelda1 fait en Python.
 
