@@ -6,6 +6,7 @@ import tiles_register
 import map_register
 import entities.entities_register
 import menu_sys
+import character_register
 
 #initialization
 pygame.init()
@@ -38,7 +39,7 @@ number_map = map_register.register_number[y_map][x_map]
 tiles = tiles_register.tiles_register
 
 #Characteres
-Ash = entities.entities_register.Characteres_register["Ash"]
+Equiped_chr = character_register.characteres_equip_list
 
 #Entity
 entity_test = entities.entities_register.SimpleEntities_register["EntityTest"]
@@ -65,37 +66,53 @@ while running:
 
     #character map function
     if menu.Is_opened == False:
-        move_loop(Ash)
-        if Ash.x == 24:
+        move_loop(Equiped_chr[0])
+        if Equiped_chr[0].x == 24:
             x_map = x_map + 1
+            if len(map_register.register_data[y_map]) == x_map:
+                x_map = 0
             map_data = map_register.register_data[y_map][x_map]
             number_map = map_register.register_number[y_map][x_map]
-            Ash.x = 1
-            Ash.ChangeMapPToPP()
-        elif Ash.y == 18:
+            Equiped_chr[0].x = 1
+            Equiped_chr[0].is_animated = False
+            Equiped_chr[0].ChangeMapPToPP()
+        elif Equiped_chr[0].y == 18:
             y_map = y_map + 1
+            if len(map_register.register_data) == y_map:
+                y_map = 0
             map_data = map_register.register_data[y_map][x_map]
             number_map = map_register.register_number[y_map][x_map]
-            Ash.y = 1
-            Ash.ChangeMapPToPP()
-        elif Ash.x == 0:
+            Equiped_chr[0].y = 1
+            Equiped_chr[0].is_animated = False
+            Equiped_chr[0].ChangeMapPToPP()
+        elif Equiped_chr[0].x == 0:
             x_map = x_map - 1
+            if -1 == x_map:
+                x_map = len(map_register.register_data[y_map]) - 1
             map_data = map_register.register_data[y_map][x_map]
             number_map = map_register.register_number[y_map][x_map]
-            Ash.x = 23
-            Ash.ChangeMapPToPP()
-        elif Ash.y == 0:
+            Equiped_chr[0].x = 23
+            Equiped_chr[0].is_animated = False
+            Equiped_chr[0].ChangeMapPToPP()
+        elif Equiped_chr[0].y == 0:
             y_map = y_map - 1
+            if -1 == y_map:
+                y_map = len(map_register.register_data) - 1
             map_data = map_register.register_data[y_map][x_map]
             number_map = map_register.register_number[y_map][x_map]
-            Ash.y = 17
-            Ash.ChangeMapPToPP()
+            Equiped_chr[0].y = 17
+            Equiped_chr[0].is_animated = False
+            Equiped_chr[0].ChangeMapPToPP()
 
-    if Ash.x == entity_test.x and Ash.y == entity_test.y:
-        print('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+    #change screen
+    if prsd('alt') and prsd('enter'):
+        pygame.display.toggle_fullscreen()
 
-    #call menu
+    #menu
     menu.open_close()
+    if menu.Is_opened:
+        menu.point_sub_menu()
+        menu.open_close_submenu()
 
     #Fill Background
     screen.fill(Black)
@@ -112,8 +129,8 @@ while running:
                 screen.blit(tiles[tile_type], (col * tile_size, row * tile_size))
 
         # Blit character(es)
-        Ash.move_animation(10)
-        Ash.draw(screen)
+        Equiped_chr[0].move_animation(10)
+        Equiped_chr[0].draw(screen)
 
         # Blit entities
         if entity_test.active(number_map):
