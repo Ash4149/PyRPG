@@ -10,16 +10,14 @@ import character_register
 
 #initialization
 pygame.init()
+debug_mode = True
 
 #window parameters
-fullscreen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-pygame.display.set_caption('PyRPG (in progress)')
-
 screen_width, screen_height = 800, 600
-screen_windowed = pygame.display.set_mode((screen_width, screen_height))
+screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('PyRPG (in progress)')
-
-screen = screen_windowed
+icon = pygame.image.load('icon/windows_icon.png')
+pygame.display.set_icon(icon)
 
 #Color
 White = (255, 255, 255)
@@ -48,20 +46,20 @@ entity_test = entities.entities_register.SimpleEntities_register["EntityTest"]
 def move_loop(Character):
     if Character.is_animated == False:
         if prsd('up'):
-            Character.move(0, -1, map_data)
+            Character.move_chr(0, -1, map_data)
         elif prsd('down'):
-            Character.move(0, 1, map_data)
+            Character.move_chr(0, 1, map_data)
         elif prsd('left'):
-            Character.move(-1, 0, map_data)
+            Character.move_chr(-1, 0, map_data)
         elif prsd('right'):
-            Character.move(1, 0, map_data)
+            Character.move_chr(1, 0, map_data)
 
 #Game loop
 running = True
 
 while running:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or event.type == pygame.K_F4:
             running = False
 
     #character map function
@@ -104,19 +102,22 @@ while running:
             Equiped_chr[0].is_animated = False
             Equiped_chr[0].ChangeMapPToPP()
 
+        entity_test.RandomMove(map_data)
+
     #change screen
     if prsd('alt') and prsd('enter'):
         pygame.display.toggle_fullscreen()
 
     #menu
-    menu.open_close()
+    if not Equiped_chr[0].is_animated:
+        menu.open_close()
     if menu.Is_opened:
-        menu.point_sub_menu()
+        menu.point_object()
         menu.open_close_submenu()
 
     #Fill Background
     screen.fill(Black)
-    
+
     # Blit Menu
     if menu.Is_opened == True:
         menu.draw(screen)
@@ -129,17 +130,21 @@ while running:
                 screen.blit(tiles[tile_type], (col * tile_size, row * tile_size))
 
         # Blit character(es)
-        Equiped_chr[0].move_animation(10)
+        Equiped_chr[0].move_animation(12)
         Equiped_chr[0].draw(screen)
 
         # Blit entities
         if entity_test.active(number_map):
             entity_test.replace()
+            entity_test.ChangeMapPToPP()
             entity_test.draw(screen)
         else:
             entity_test.remove()
     
-        entity_test.ChangeMapPToPP()
+    #debug test
+    if debug_mode:
+        if prsd('k'):
+            print((entity_test.x, entity_test.y), (entity_test.pixel_x, entity_test.pixel_y))
 
     #screen flip
     pygame.display.flip()

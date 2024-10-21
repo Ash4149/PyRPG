@@ -10,4 +10,4 @@ ash_map_sprites = [map_neutral, map_up, map_right, map_left]
 ash_sprites = [ash_map_sprites]
 
 
-ash_chr = entity_class.Character("Ash", 5, 5, ash_sprites, 500, 75, 20, 2, 2, 50, 62.5, 50)
+ash_chr = entity_class.Character("Ash", 5, 5, 5, 5,ash_sprites, 500, 75, 20, 2, 2, 50, 62.5, 50)
