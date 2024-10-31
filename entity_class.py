@@ -72,31 +72,17 @@ class Entity:
 
 
 class Character(Entity):
-    def __init__(self, name, x, y, set_x, set_y, sprites, Life, Atk, Def, Luck, Level, Exp, More_Exp, Last_Exp) -> None:
-        super().__init__(name, x, y, set_x, set_y, sprites)
+    def __init__(self, name, x, y, set_x, set_y, sprites, battle_sprites, Life) -> None:
+        super().__init__(name, x, y, set_x, set_y, sprites, battle_sprites)
+        self.sprites = sprites
         self.set_x = set_x
         self.set_y = set_y
-        self.Atk = Atk
-        self.Def = Def
-        self.Level = Level
-        self.Exp = Exp
-        self.Luck = Luck
-        self.More_Exp = More_Exp
-        self.Last_Exp = Last_Exp
-        self.Life = round(Life * (self.Def / 90))
+        self.Life = Life
         pass
 
-    def Attack(self, enemy, More):
-        Damage = self.Atk * More
-        if round(random.randint(1, 10 - self.Luck)) == 1:
-            enemy.Life = enemy.Life - round(random.randint(Damage + 50, Damage + 75))
-        else:
-            enemy.Life = enemy.Life - round(random.randint(Damage, Damage + 40))
-
-
 class SimpleEntity(Entity):
-    def __init__(self, name, x, y, set_x, set_y, sprites, map, tiles_move=None) -> None:
-        super().__init__(name, x, y, set_x, set_y, sprites)
+    def __init__(self, name, x, y, set_x, set_y, sprites, battle_sprites, map, tiles_move=None) -> None:
+        super().__init__(name, x, y, set_x, set_y, sprites, battle_sprites)
         self.map = map
         self.tiles_move = tiles_move
         pass
@@ -129,8 +115,7 @@ class SimpleEntity(Entity):
                     self.is_animated = True
     
 class HostileEntity(SimpleEntity):
-    def __init__(self, name, x, y, set_x, set_y, sprites, map, tiles_move=None):
-        super().__init__(name, x, y, set_x, set_y, sprites, map, tiles_move)
-
-    def is_touching(self, x, y):
-        return (x == self.x) and (y == self.y)
+    def __init__(self, name, x, y, set_x, set_y, sprites, battle_sprites, map, Life, tiles_move=None):
+        super().__init__(name, x, y, set_x, set_y, sprites, battle_sprites, map, tiles_move)
+        self.Life = Life
+        pass
