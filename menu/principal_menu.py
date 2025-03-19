@@ -1,9 +1,7 @@
-#import
-import menu.Pocket_menu
+import pygame
+pygame.init()
 
-#background
-background = 'sprites/menu/back_ground/principal_menu_back_ground.png'
-
-#data agencement
-menu_data_text = ["Tag", "Equip", "Pocket", "Skills", "Options"]
-menu_data_redirection = [[], [], menu.Pocket_menu.Object_list, [], []]
+#data
+background = pygame.image.load('sprites/menu/background/background.png')
+buttons_data = ['Start', 'Config', 'Quit']
+button_sprites = pygame.image.load('sprites/menu/gui/buttons.png')

@@ -40,7 +40,7 @@ class Entity:
     def move_chr(self, dx, dy, map_data):
         self.dx = dx
         self.dy = dy
-        if map_data[self.y + dy][self.x + dx] in {0, 2, 3}:
+        if map_data.map_data[self.y + dy][self.x + dx] in {0, 2, 3}:
             if self.change_pixel_lapse == 0:
                 self.x = self.x + dx
                 self.y = self.y + dy
@@ -72,12 +72,13 @@ class Entity:
 
 
 class Character(Entity):
-    def __init__(self, name, x, y, set_x, set_y, sprites, battle_sprites, Life) -> None:
+    def __init__(self, name, x, y, set_x, set_y, sprites, battle_sprites, Life, Atk=25) -> None:
         super().__init__(name, x, y, set_x, set_y, sprites, battle_sprites)
         self.sprites = sprites
         self.set_x = set_x
         self.set_y = set_y
         self.Life = Life
+        self.Atk = Atk
         pass
 
 class SimpleEntity(Entity):
