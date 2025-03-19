@@ -1,4 +1,8 @@
-#maps' size : 25 x 18
+import entities
+import entities.simple_entities
+import entities.simple_entities.EntityTest
+
+#map size : 25 x 18
 #x:0, y:0
 number_map = 0
 
@@ -23,3 +27,5 @@ map_data = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
+
+entity = [entities.simple_entities.EntityTest.EntityTest]
