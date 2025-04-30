@@ -1,0 +1,37 @@
+Moteur PYRPG:
+
+fait:
+-système de tuiles
+-système de création et d'affichage de map
+-système de changement de map
+-système de classe d'entités:
+  fait:
+    Personnage (presque fait)
+    Entité simple
+  a faire:
+    Entité spécial:
+      Pacifique
+      Agressif
+-système de mouvement du personnage
+
+a faire:
+-système d'écran de commencement (en cours)
+-système de combat (en cours, repporté)
+-système d'xp et level up
+-système de mouvement d'entités mouvantes
+-système de changement des sprites d'entités
+-système de dialogue
+
+#plus tard :'I
+-système d'objet:
+  -objet d'équipement
+  -objet de map
+  -objet de combat spéciaux
+-système d'attaque spécial
+-système de changement ed taille d'écran
+
+-système d'évènement:
+  -par position
+  -par effet
+-système d'animation
+

@@ -7,7 +7,7 @@ tile_size = 32
 #window_size = (800, 600)
 
 class Entity:
-    def __init__(self, name, x, y ,set_x, set_y, sprites, battle_sprites=None) -> None:
+    def __init__(self, name, x, y ,set_x, set_y, sprites, battle_sprites=None, allowed_tiles={0, 2, 3}) -> None:
         self.name = name
         self.x = x
         self.y = y
@@ -22,6 +22,7 @@ class Entity:
         self.is_running = False
         self.dx = 0
         self.dy = 0
+        self.allowed_tiles = allowed_tiles
         pass
     
     def ChangeMapPToPP(self):
@@ -37,18 +38,19 @@ class Entity:
         self.pixel_x = self.set_x * tile_size
         self.pixel_y = self.set_y * tile_size
     
-    def move_chr(self, dx, dy, map_data):
+    def move_chr(self, dx, dy, map_data, entities_list):
         self.dx = dx
         self.dy = dy
-        if map_data.map_data[self.y + dy][self.x + dx] in {0, 2, 3}:
-            if self.change_pixel_lapse == 0:
-                self.x = self.x + dx
-                self.y = self.y + dy
-                if prsd('shift'):
-                    self.is_running = True
-                else:
-                    self.is_running = False
-            self.is_animated = True
+        if map_data.map_data[self.y + dy][self.x + dx] in self.allowed_tiles:
+            if [(self.y + dy)] != [e.y for e in entities_list] or [(self.x + dx)] != [e.x for e in entities_list]:
+                if self.change_pixel_lapse == 0:
+                    self.x = self.x + dx
+                    self.y = self.y + dy
+                    if prsd('shift'):
+                        self.is_running = True
+                    else:
+                        self.is_running = False
+                self.is_animated = True
     
     def move_animation(self, move_division):
         dpx = (self.dx * tile_size) / move_division
